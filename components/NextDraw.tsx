@@ -35,7 +35,7 @@ function NextDraw() {
           </div>
           <div className="stats">
             <h2 className="text-sm">Tickets Remaing</h2>
-            <p className="text-xl">{remainingTickets?.toNumber()}</p>
+            <p className="text-xl">{parseInt(remainingTickets)}</p>
           </div>
         </div>
         <CountdownTimer />

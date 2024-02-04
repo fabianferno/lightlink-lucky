@@ -7,7 +7,7 @@ import { polygonMumbai } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { injected } from "wagmi/connectors";
 
-export const config = createConfig({
+const config = createConfig({
   chains: [polygonMumbai],
   connectors: [injected()],
   transports: {

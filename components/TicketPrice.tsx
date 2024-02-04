@@ -5,6 +5,7 @@ import { ethers } from "ethers";
 import { currency } from "../constants";
 import toast from "react-hot-toast";
 import { abi } from "../contract/artifacts/Lottery.sol/Lottery.json";
+
 function TicketPrice() {
   const { countdownEnded, quantity, setQuantity, userTickets, setUserTickets } =
     useContext(GlobalContext);

@@ -7,7 +7,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { abi } from "../contract/artifacts/Lottery.sol/Lottery.json";
 
-import { useContractWrite, useReadContract, useWriteContract } from "wagmi";
+import { useReadContract, useWriteContract } from "wagmi";
 import { ethers } from "ethers";
 import { currency } from "../constants";
 import toast from "react-hot-toast";

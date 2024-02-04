@@ -30,8 +30,12 @@ function WalletOption({
   }, [connector]);
 
   return (
-    <button disabled={!ready} onClick={onClick}>
-      {connector.name}
+    <button
+      className="text-white font-bold bg-indigo-400 p-2 rounded-2xl"
+      disabled={!ready}
+      onClick={onClick}
+    >
+      Connect
     </button>
   );
 }
