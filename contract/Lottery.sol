@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
-import "@openzeppelin/contracts/utils/Strings.sol";
+pragma solidity ^0.8.20;
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Strings.sol";
 import "@api3/airnode-protocol/contracts/rrp/requesters/RrpRequesterV0.sol";
 pragma solidity ^0.8.17;
  
