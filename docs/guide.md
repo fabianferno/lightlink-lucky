@@ -1,4 +1,4 @@
-# Crypto Lottery Dapp:
+# LightLink Lucky Dapp:
 
 Create a Project and install dependencies:
 
@@ -22097,8 +22097,8 @@ This will upload the contract to thirdweb and we can release this contract on th
 
 - When the thirdweb site opens connect to your MetaMask wallet.
 - When developing this Crypto App we used the Testnet "Mumbai (MATIC)"
-- Release Name: Crypto Lottery Dapp v1
-- Description: Crypto Lottery Dapp by Valyn D'Silva
+- Release Name: LightLink Lucky Dapp v1
+- Description: LightLink Lucky Dapp by Valyn D'Silva
 - Create Release > Sign
 - The Contract releases on the Polygon network. Releasing is free (gasless).
 - Deploy Now
@@ -22341,7 +22341,7 @@ const Home: NextPage = () => {
   return (
     <div className="bg-[#091B18] min-h-screen flex flex-col">
       <Head>
-        <title>Crypto Lottery</title>
+        <title>LightLink Lucky</title>
       </Head>
       <Header />
     </div>
@@ -22495,7 +22495,7 @@ const Home: NextPage = () => {
   return (
     <div className="bg-[#091B18] min-h-screen flex flex-col">
       <Head>
-        <title>Crypto Lottery</title>
+        <title>LightLink Lucky</title>
       </Head>
       <div className="flex-1">
         <Header />
@@ -23234,7 +23234,7 @@ const Home: NextPage = () => {
   return (
     <div className="bg-[#091B18] min-h-screen flex flex-col">
       <Head>
-        <title>Crypto Lottery</title>
+        <title>LightLink Lucky</title>
       </Head>
       <div className="flex-1">
         <Header />
@@ -23337,7 +23337,7 @@ const Home: NextPage = () => {
   return (
     <div className="bg-[#091B18] min-h-screen flex flex-col">
       <Head>
-        <title>Crypto Lottery</title>
+        <title>LightLink Lucky</title>
       </Head>
       <div className="flex-1">
         <Header />
@@ -23402,7 +23402,7 @@ const Home: NextPage = () => {
   return (
     <div className="bg-[#091B18] min-h-screen flex flex-col">
       <Head>
-        <title>Crypto Lottery</title>
+        <title>LightLink Lucky</title>
       </Head>
       <div className="flex-1">
         <Header />
@@ -23650,7 +23650,7 @@ const Home: NextPage = () => {
   return (
     <div className="bg-[#091B18] min-h-screen flex flex-col">
       <Head>
-        <title>Crypto Lottery</title>
+        <title>LightLink Lucky</title>
       </Head>
       <div className="flex-1">
         <Header />

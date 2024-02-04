@@ -143,12 +143,7 @@ contract Lottery is RrpRequesterV0 {
     }
 
     function DrawWinnerTicket() public isOperator {
-        require(tickets.length > 0, "No tickets were purchased");
-
-        // bytes32 blockHash = blockhash(block.number - tickets.length);
-        // uint256 randomNumber = uint256(
-        //     keccak256(abi.encodePacked(block.timestamp, blockHash))
-        // ); 
+        require(tickets.length > 0, "No tickets were purchased"); 
         makeRequestUint256();
 
         address winner = tickets[winningNumber];

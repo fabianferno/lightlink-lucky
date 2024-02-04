@@ -33,8 +33,11 @@ function TicketPrice() {
     functionName: "getTickets",
   });
 
-  const { data: BuyTicketsHash, writeContract: BuyTickets } =
-    useWriteContract();
+  const {
+    data: BuyTicketsHash,
+    writeContract: BuyTickets,
+    error: BuyTicketsError,
+  } = useWriteContract();
 
   useEffect(() => {
     if (!tickets) return;
@@ -51,22 +54,18 @@ function TicketPrice() {
     if (!ticketPrice) return;
     const notification = toast.loading("Buying your tickets...");
     try {
-      const data = await BuyTickets({
+      const ticketAmt: any = ethers.utils.parseEther(
+        (Number(ethers.utils.formatEther(ticketPrice)) * quantity).toString()
+      );
+      const data = BuyTickets({
         address: process.env
           .NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS as `0x${string}`,
         abi: Contract.abi,
         functionName: "BuyTickets",
-        args: [
-          quantity,
-          ethers.utils.parseEther(
-            (
-              Number(ethers.utils.formatEther(ticketPrice)) * quantity
-            ).toString()
-          ),
-        ],
+        value: ticketAmt,
       });
       toast.success("Tickets purchased successfully!", { id: notification });
-      console.log("Contract call success!", data);
+      console.log("Contract call success!", data, BuyTicketsError, quantity);
       setQuantity(1);
     } catch (err) {
       toast.error("Whoops, something went wrong!", { id: notification });

@@ -97,7 +97,7 @@ const Home: NextPage = () => {
   return (
     <div className="bg-black min-h-screen flex flex-col">
       <Head>
-        <title>Crypto Lottery</title>
+        <title>LightLink Lucky</title>
       </Head>
       <div className="flex-1">
         <Header />
