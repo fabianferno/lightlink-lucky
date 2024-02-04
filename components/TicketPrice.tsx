@@ -4,7 +4,7 @@ import { useAccount, useReadContract, useWriteContract } from "wagmi";
 import { ethers } from "ethers";
 import { currency } from "../constants";
 import toast from "react-hot-toast";
-import { abi } from "../contract/artifacts/Lottery.sol/Lottery.json";
+import Contract from "../contract/artifacts/Lottery.sol/Lottery.json";
 
 function TicketPrice() {
   const { countdownEnded, quantity, setQuantity, userTickets, setUserTickets } =
@@ -14,22 +14,22 @@ function TicketPrice() {
 
   const { data: ticketPrice }: any = useReadContract({
     address: process.env.NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS as `0x${string}`,
-    abi,
+    abi: Contract.abi,
     functionName: "ticketPrice",
   });
   const { data: ticketCommission }: any = useReadContract({
     address: process.env.NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS as `0x${string}`,
-    abi,
+    abi: Contract.abi,
     functionName: "ticketCommission",
   });
   const { data: remainingTickets }: any = useReadContract({
     address: process.env.NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS as `0x${string}`,
-    abi,
+    abi: Contract.abi,
     functionName: "RemainingTickets",
   });
   const { data: tickets }: any = useReadContract({
     address: process.env.NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS as `0x${string}`,
-    abi,
+    abi: Contract.abi,
     functionName: "getTickets",
   });
 
@@ -54,7 +54,7 @@ function TicketPrice() {
       const data = await BuyTickets({
         address: process.env
           .NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS as `0x${string}`,
-        abi,
+        abi: Contract.abi,
         functionName: "BuyTickets",
         args: [
           quantity,
@@ -75,8 +75,8 @@ function TicketPrice() {
   };
 
   return (
-    <div className="stats-container space-y-2">
-      <div className="stats-container">
+    <div className="stats-container h-[400px] bg-slate-900 ">
+      <div className="stats-container bg-slate-900 border-none">
         <div className="flex justify-between items-center text-white pb-2">
           <h2>Price per ticket</h2>
           <p>
@@ -84,7 +84,7 @@ function TicketPrice() {
             {currency}
           </p>
         </div>
-        <div className="flex text-white items-center space-x-2 bg-[#091B18]  border-[#004337] border p-4">
+        <div className="flex text-white items-center space-x-2 bg-slate-900  border-[#004337] border p-4">
           <p>TICKETS</p>
           <input
             type="number"
@@ -97,9 +97,9 @@ function TicketPrice() {
           />
         </div>
 
-        <div className="space-y-2 mt-5">
+        <div className="space-y-2 mt-5 ">
           <div className="fees font-extrabold text-sm">
-            <p>Total cost of tickets</p>
+            <p className="text-white">Total cost of tickets</p>
             <p>
               {ticketPrice &&
                 Number(ethers.utils.formatEther(ticketPrice?.toString())) *
@@ -108,7 +108,7 @@ function TicketPrice() {
             </p>
           </div>
           <div className="fees">
-            <p>Service fees</p>
+            <p className="text-white">Service fees</p>
             <p>
               {" "}
               {ticketCommission &&
@@ -117,14 +117,14 @@ function TicketPrice() {
             </p>
           </div>
           <div className="fees">
-            <p>+ Network Fees</p>
+            <p className="text-white">+ Network Fees</p>
             <p>TBC</p>
           </div>
         </div>
         <button
           onClick={handleClick}
           disabled={countdownEnded || remainingTickets?.toNumber === 0}
-          className="mt-5 w-full bg-gradient-to-br from-orange-500 to-emerald-600 px-10 py-5 rounded-md font-semibold text-white shadow-xl disabled:from-gray-600 disabled:to-gray-100 disabled:text-gray-100 disabled:cursor-not-allowed"
+          className="mt-20 w-full bg-gradient-to-br from-black to-slate-600 px-10 py-5 rounded-md font-semibold text-white shadow-xl disabled:from-gray-600 disabled:to-gray-100 disabled:text-gray-100 disabled:cursor-not-allowed"
         >
           Buy {quantity} tickets for{" "}
           {ticketPrice &&

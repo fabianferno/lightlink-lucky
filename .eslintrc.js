@@ -21,6 +21,7 @@ module.exports = {
   rules: {
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/triple-slash-reference": "off",
+    "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/restrict-template-expressions": "off",
     "import/no-anonymous-default-export": "off",
     "no-undef": "off",

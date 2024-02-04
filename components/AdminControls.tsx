@@ -5,7 +5,8 @@ import {
   ArrowPathIcon,
   ArrowUturnDownIcon,
 } from "@heroicons/react/24/solid";
-import { abi } from "../contract/artifacts/Lottery.sol/Lottery.json";
+import Contract from "../contract/artifacts/Lottery.sol/Lottery.json";
+import { useEffect } from "react";
 
 import { useReadContract, useWriteContract } from "wagmi";
 import { ethers } from "ethers";
@@ -15,7 +16,7 @@ import toast from "react-hot-toast";
 function AdminControls() {
   const { data: totalCommission }: any = useReadContract({
     address: process.env.NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS as `0x${string}`,
-    abi,
+    abi: Contract.abi,
     functionName: "operatorTotalCommission",
   });
   // console.log(totalCommission);
@@ -24,9 +25,21 @@ function AdminControls() {
     useWriteContract();
   const { data: WithdrawCommissionHash, writeContract: WithdrawCommission } =
     useWriteContract();
-  const { data: restartDrawHash, writeContract: restartDraw } =
-    useWriteContract();
+  const {
+    data: restartDrawHash,
+    writeContract: restartDraw,
+    error: restartDrawError,
+  } = useWriteContract();
   const { data: RefundAllHash, writeContract: RefundAll } = useWriteContract();
+
+  useEffect(() => {
+    console.log(DrawWinnerTicketHash, WithdrawCommissionHash, restartDrawHash);
+  }, [
+    DrawWinnerTicketHash,
+    WithdrawCommissionHash,
+    restartDrawHash,
+    RefundAllHash,
+  ]);
 
   const drawWinner = async () => {
     const notification = toast.loading("Picking a Lucky Winner...");
@@ -34,7 +47,7 @@ function AdminControls() {
       const data = await DrawWinnerTicket({
         address: process.env
           .NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS as `0x${string}`,
-        abi,
+        abi: Contract.abi,
         functionName: "DrawWinnerTicket",
       });
       toast.success("A Winner has been selected!", {
@@ -55,7 +68,7 @@ function AdminControls() {
       const data = await WithdrawCommission({
         address: process.env
           .NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS as `0x${string}`,
-        abi,
+        abi: Contract.abi,
         functionName: "WithdrawCommission",
       });
       toast.success("Your commission has been withdrawn successfully!", {
@@ -73,16 +86,16 @@ function AdminControls() {
   const onRestartDraw = async () => {
     const notification = toast.loading("Restarting draw...");
     try {
-      const data = await restartDraw({
+      const data = restartDraw({
         address: process.env
           .NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS as `0x${string}`,
-        abi,
-        functionName: "restartDraw",
+        abi: Contract.abi,
+        functionName: "RestartDraw",
       });
       toast.success("Draw restarted successfully!", {
         id: notification,
       });
-      console.info("Contract call success", data);
+      console.info("Contract call success", data, restartDrawError);
     } catch (err) {
       toast.error("Whoops, something went wrong!", {
         id: notification,
@@ -97,7 +110,7 @@ function AdminControls() {
       const data = await RefundAll({
         address: process.env
           .NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS as `0x${string}`,
-        abi,
+        abi: Contract.abi,
         functionName: "RefundAll",
       });
       toast.success("All refunded successfully!", {

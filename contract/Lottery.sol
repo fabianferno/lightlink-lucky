@@ -2,12 +2,13 @@
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@api3/airnode-protocol/contracts/rrp/requesters/RrpRequesterV0.sol";
 pragma solidity ^0.8.17;
-
+ 
+ 
 contract Lottery is RrpRequesterV0 {
-    uint256 public constant ticketPrice = 0.01 ether;
-    uint256 public constant maxTickets = 100; // maximum tickets per lottery
-    uint256 public constant ticketCommission = 0.001 ether; // commition per ticket
-    uint256 public constant duration = 30 minutes; // The duration set for the lottery
+    uint256 public constant ticketPrice = 0.0001 ether;
+    uint256 public constant maxTickets = 10; // maximum tickets per lottery
+    uint256 public constant ticketCommission = 0.00001 ether; // commission per ticket
+    uint256 public constant duration = 1 hours; // The duration set for the lottery
 
     uint256 public expiration; // Timeout in case That the lottery was not carried out.
     address public lotteryOperator; // the crator of the lottery

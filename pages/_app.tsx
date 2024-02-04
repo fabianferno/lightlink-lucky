@@ -6,12 +6,27 @@ import { http, createConfig, WagmiProvider } from "wagmi";
 import { polygonMumbai } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { injected } from "wagmi/connectors";
+import { Chain } from "wagmi/chains";
 
+const LightLinkPegasus: Chain = {
+  id: 1891,
+  name: "LightLink Pegasus",
+  nativeCurrency: {
+    decimals: 18,
+    name: "ETH",
+    symbol: "ETH",
+  },
+  rpcUrls: {
+    public: { http: ["https://replicator.pegasus.lightlink.io/rpc/v1"] },
+    default: { http: ["https://replicator.pegasus.lightlink.io/rpc/v1"] },
+  },
+  testnet: true,
+};
 const config = createConfig({
-  chains: [polygonMumbai],
+  chains: [LightLinkPegasus],
   connectors: [injected()],
   transports: {
-    [polygonMumbai.id]: http(),
+    [LightLinkPegasus.id]: http(),
   },
 });
 

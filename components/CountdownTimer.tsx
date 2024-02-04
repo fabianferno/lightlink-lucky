@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useContractRead, useReadContract } from "wagmi";
 import Countdown from "react-countdown";
 import GlobalContext from "../context/GlobalContext";
-import { abi } from "../contract/artifacts/Lottery.sol/Lottery.json";
+import Contract from "../contract/artifacts/Lottery.sol/Lottery.json";
 interface Props {
   hours: number;
   minutes: number;
@@ -15,12 +15,12 @@ function CountdownTimer() {
 
   const { data: expiration }: any = useReadContract({
     address: process.env.NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS as `0x${string}`,
-    abi,
+    abi: Contract.abi,
     functionName: "expiration",
   });
   const { data: duration }: any = useReadContract({
     address: process.env.NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS as `0x${string}`,
-    abi,
+    abi: Contract.abi,
     functionName: "duration",
   });
 
@@ -62,18 +62,26 @@ function CountdownTimer() {
       // Render a countdown
       return (
         <div>
-          <h3 className="text-white text-sm mb-2 italic">Time Remaining</h3>
+          <h3 className="text-white text-sm mb-2 italic text-center">
+            Time Remaining
+          </h3>
           <div className="flex space-x-6">
             <div className="flex-1">
-              <div className="countdown">{hours}</div>
+              <div className="countdown rounded-2xl shadow-teal-800 shadow-inner">
+                {hours}
+              </div>
               <div className="countdown-label">hours</div>
             </div>
             <div className="flex-1">
-              <div className="countdown">{minutes}</div>
+              <div className="countdown rounded-2xl shadow-teal-800 shadow-inner">
+                {minutes}
+              </div>
               <div className="countdown-label">minutes</div>
             </div>
             <div className="flex-1">
-              <div className="countdown">{seconds}</div>
+              <div className="countdown rounded-2xl shadow-teal-800 shadow-inner">
+                {seconds}
+              </div>
               <div className="countdown-label">seconds</div>
             </div>
           </div>

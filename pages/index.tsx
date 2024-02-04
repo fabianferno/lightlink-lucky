@@ -13,44 +13,77 @@ import Marquee from "react-fast-marquee";
 import { ethers } from "ethers";
 import { currency } from "../constants";
 import { useAccount, useReadContract } from "wagmi";
-import { abi } from "../contract/artifacts/Lottery.sol/Lottery.json";
+import Contract from "../contract/artifacts/Lottery.sol/Lottery.json";
+import { useEffect } from "react";
 
 const Home: NextPage = () => {
   const { address } = useAccount();
   // console.log(address);
 
-  const { data: winnings, isLoading: isGetWinningsForAddressLoading }: any =
-    useReadContract({
-      address: process.env
-        .NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS as `0x${string}`,
-      abi,
-      functionName: "getWinningsForAddress",
-      args: [address],
-    });
+  const {
+    data: winnings,
+    isLoading: isGetWinningsForAddressLoading,
+    error: GettingWinningsForAddressError,
+  }: any = useReadContract({
+    address: process.env.NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS as `0x${string}`,
+    abi: Contract.abi,
+    functionName: "getWinningsForAddress",
+    args: [address],
+  });
 
-  const { data: lastWinner, isLoading: isLastWinnerLoading }: any =
-    useReadContract({
-      address: process.env
-        .NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS as `0x${string}`,
-      abi,
-      functionName: "lastWinner",
-    });
+  const {
+    data: lastWinner,
+    isLoading: isLastWinnerLoading,
+    error: LastWinnerError,
+  }: any = useReadContract({
+    address: process.env.NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS as `0x${string}`,
+    abi: Contract.abi,
+    functionName: "lastWinner",
+  });
 
-  const { data: lastWinnerAmount, isLoading: isLastWinnerAmountLoading }: any =
-    useReadContract({
-      address: process.env
-        .NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS as `0x${string}`,
-      abi,
-      functionName: "lastWinnerAmount",
-    });
+  const {
+    data: lastWinnerAmount,
+    isLoading: isLastWinnerAmountLoading,
+    error: LastWinnerAmountError,
+  }: any = useReadContract({
+    address: process.env.NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS as `0x${string}`,
+    abi: Contract.abi,
+    functionName: "lastWinnerAmount",
+  });
 
-  const { data: isLotteryOperator, isLoading: isLotteryOperatorLoading }: any =
-    useReadContract({
-      address: process.env
-        .NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS as `0x${string}`,
-      abi,
-      functionName: "lotteryOperator",
-    });
+  const {
+    data: isLotteryOperator,
+    isLoading: isLotteryOperatorLoading,
+    error: LotteryOperatorError,
+  }: any = useReadContract({
+    address: process.env.NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS as `0x${string}`,
+    abi: Contract.abi,
+    functionName: "lotteryOperator",
+  });
+
+  useEffect(() => {
+    if (
+      isGetWinningsForAddressLoading ||
+      isLastWinnerLoading ||
+      isLastWinnerAmountLoading ||
+      isLotteryOperatorLoading
+    ) {
+      return;
+    } else {
+      console.log({
+        GettingWinningsForAddressError,
+        LastWinnerError,
+        LastWinnerAmountError,
+        LotteryOperatorError,
+      });
+      console.log({
+        winnings,
+        lastWinner,
+        lastWinnerAmount,
+        isLotteryOperator,
+      });
+    }
+  }, []);
 
   if (
     isGetWinningsForAddressLoading ||
@@ -62,22 +95,25 @@ const Home: NextPage = () => {
   if (!address) return <Login />;
 
   return (
-    <div className="bg-[#091B18] min-h-screen flex flex-col">
+    <div className="bg-black min-h-screen flex flex-col">
       <Head>
         <title>Crypto Lottery</title>
       </Head>
       <div className="flex-1">
         <Header />
-        <Marquee className="bg-[#0A1F1C] p-5 mb-5" gradient={false} speed={100}>
+        <Marquee className="bg-zinc-900 p-5 mb-5" gradient={false} speed={100}>
           <div className="flex space-x-2 mx-10">
             <h4 className="text-white font-bold">
-              Last Winner: {lastWinner?.toString()}
+              {lastWinner?.toString() ===
+              "0x0000000000000000000000000000000000000000"
+                ? "No winner yet"
+                : `Last Winner: ${lastWinner?.toString()}`}
             </h4>
             <h4 className="text-white font-bold">
-              Previous winnings:{" "}
+              ~{" "}
               {parseInt(lastWinnerAmount) &&
                 ethers.utils.formatEther(lastWinnerAmount?.toString())}{" "}
-              {currency}{" "}
+              {currency} in winnings
             </h4>
           </div>
         </Marquee>

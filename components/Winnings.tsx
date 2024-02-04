@@ -3,7 +3,7 @@ import { useWriteContract } from "wagmi";
 import { currency } from "../constants";
 import { ethers } from "ethers";
 import toast from "react-hot-toast";
-import { abi } from "../contract/artifacts/Lottery.sol/Lottery.json";
+import Contract from "../contract/artifacts/Lottery.sol/Lottery.json";
 interface Props {
   winnings: string;
 }
@@ -17,7 +17,7 @@ function Winnings({ winnings }: Props) {
       const data = await WithdrawWinnings({
         address: process.env
           .NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS as `0x${string}`,
-        abi,
+        abi: Contract.abi,
         functionName: "WithdrawWinnings",
         args: [],
       });
